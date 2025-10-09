@@ -1,15 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Api météo</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-zXv0d7lE+9SkgrnZxX+uIutSrxn8xY8kHvOeA0uRpjhZ+FSj7WjqNwcRyoPHT3QyL8RZz8/9tYyRmr0Zrdl9g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-    
+    <div class="container">
+        <form>
+
+            <div class="wrapper">
+                <div class="search-container">
+                    <input type="text" class="search" placeholder="Ville...">
+                    <input type="text" class="altitude" placeholder="Altitude...">
+                    <input type="text" class="longitude" placeholder=" Longitude...">
+                    <button type="submit" class="button"><svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                            <path fill="#ffffff"
+                                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z" />
+                        </svg></button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="notretempsaujourdhui">
+        <h1></h1>
+        <img class="img-meteo" src="" alt="">
+        <div class="degrecelsius"></div>
+    </div>
+    <footer><a class="chezmoi" href=""></a>
+        <a class="chezmoiloop" href=""></a>
+    </footer>
 </body>
 <script src="assets/script.js"></script>
+
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<div id="map"></div>
+<script>
+    const map = L.map('map').setView([48.8584, 2.2945], 13); // Paris par défaut
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    navigator.geolocation.watchPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        console.log('Latitude:', latitude, 'Longitude:', longitude);
+
+        map.setView([latitude, longitude], 13);
+        L.marker([latitude, longitude]).addTo(map)
+            .bindPopup('Vous êtes ici').openPopup();
+    });
+</script>
+
 </html>
 
 <!-- Toutes les fonctions
@@ -49,7 +101,7 @@ function cityWhereweare_func{
 
 [BONUS] : Utilisez l'api native Geolocalisation pour afficher la météo de l'utilisateur des qu'il arrive sur le site : https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API
 
-là je ne sais pas ce qu'il veut dire 
+
 https://github.com/CHAOUCHI/cdpi-dwwm/tree/1-phase2-use-case-projects-mvc/Phase%202%20-%20MVC%20REST%20et%20SPA/1.%20JavaScript%20-%20SPA%20(js%20frontend)/Cours/Annexe%20-%20GeoLocationAPI
 
 
