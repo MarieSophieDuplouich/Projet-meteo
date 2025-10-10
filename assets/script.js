@@ -1,17 +1,17 @@
 
 //mettre le fetch
-function essai(){
-   fetch("https://geocoding-api.open-meteo.com/v1/search?name=paris&count=100&language=fr&format=json&countryCode=FR")
+function essai_func() {
+    fetch("https://geocoding-api.open-meteo.com/v1/search?name=paris&count=100&language=fr&format=json&countryCode=FR")
         .then(response_obj => response_obj.json())
         .then(positions_arr => {
 
             const container = document.querySelector(".position-user");
             const template_position = document.querySelector(".template-position");
-       //le "results" c'est ce qu'il ya dans l'api L’API Open-Meteo Geocoding ne renvoie pas directement un tableau, mais un objet JSON avec une clé results qui contient le tableau.
-         Array.prototype.forEach.call(positions_arr.results, position_obj => {
-                console.log(position_obj.name);
-                console.log(position_obj.latitude);
-                console.log(position_obj.longitude);
+            //le "results" c'est ce qu'il ya dans l'api L’API Open-Meteo Geocoding ne renvoie pas directement un tableau, mais un objet JSON avec une clé results qui contient le tableau.
+            Array.prototype.forEach.call(positions_arr.results, position_obj => {
+                // console.log(position_obj.name);
+                // console.log(position_obj.latitude);
+                // console.log(position_obj.longitude);
 
                 const position_elem = template_position.content.cloneNode(true);
                 position_elem.querySelector(".user-name").textContent = position_obj.name;
@@ -24,14 +24,44 @@ function essai(){
 
 }
 
-essai();
+essai_func();
 
-// function searchBar_func{
+
 // position gps latitude longitude 
-
 // filtre chercher la ville qu'on veut
 // chercher par latitude et longitude
-// } pas de ville sur un point de coordonnées sur la terre
+
+function searchBar_func(e) {
+
+    //   console.log("🔍 Fonction searchBar_func appelée !");
+ e.preventDefault?.(); // si c’est un event de submit, ça évite le rechargement
+  const items = document.querySelectorAll(".meteo");
+  
+  const searchTerm = e.target.value
+    .normalize("NFD")               // décompose les lettres accentuées  "Normalization Form Decomposed" Forme de normalisation décomposée 
+    .replace(/[\u0300-\u036f]/g, "") // supprime les accents
+    .toLowerCase()                  // met tout en minuscules
+    .trim();                        // supprime les espaces
+
+  items.forEach(item => {
+    const text = item.innerText
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  console.log(text);
+    item.style.display = text.includes(searchTerm) ? "" : "none";
+  });
+
+
+}
+
+ // Empêche le rechargement du formulaire
+document.querySelector(".form").addEventListener("submit", e => e.preventDefault());
+document.querySelector(".search").addEventListener("input", searchBar_func);
+
+
+//pas de ville sur un point de coordonnées sur la terre
 
 
 // function princiPal_func{
