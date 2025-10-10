@@ -5,12 +5,17 @@
 }
 
 body {
+     font-family: "Patrick Hand", cursive;
+    font-weight: 400;
+    font-style: normal;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     background: linear-gradient(0.35turn, #214d9a, #299ba0, #2aa9a2);
     min-height: 100vh;
+    color: #ffffff;
+    list-style-type: none;
 }
 
 
@@ -59,7 +64,7 @@ input {
     min-height: 48px;
     min-width: 10px;
     word-wrap: nowrap;
-    color: #fff;
+    color: darkblue;
     border-radius: 5px;
 }
 
