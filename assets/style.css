@@ -18,7 +18,13 @@ body {
     list-style-type: none;
 }
 
+.day{
+    background-color: gold;
+}
 
+.night{
+    background-color: black;
+}
 .patrick-hand-regular {
     font-family: "Patrick Hand", cursive;
     font-weight: 400;
@@ -30,10 +36,10 @@ svg:not(.loop) {
 .loop{
    width: 1rem;
 }
-#map{
+/* #map{
     width: 500px;
     height:500px;
-}
+} */
 .container {
     width: 852px;
     margin: 0 auto;
