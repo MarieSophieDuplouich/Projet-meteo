@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Api météo</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-zXv0d7lE+9SkgrnZxX+uIutSrxn8xY8kHvOeA0uRpjhZ+FSj7WjqNwcRyoPHT3QyL8RZz8/9tYyRmr0Zrdl9g=="
@@ -45,6 +46,32 @@
         </template>
     </div>
 
+
+
+
+
+
+
+<div id="map" style="height: 400px;"></div>
+<script>
+    const map = L.map('map').setView([48.8584, 2.2945], 13); // Paris par défaut
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    navigator.geolocation.watchPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        console.log('Latitude:', latitude, 'Longitude:', longitude);
+
+        map.setView([latitude, longitude], 13);
+        L.marker([latitude, longitude]).addTo(map)
+            .bindPopup('Vous êtes ici').openPopup();
+    });
+</script>
+
+
+
+
+
+
     <div class="notretempsaujourdhui">
         <h1>Paris</h1>
         <img class="img-meteo" src="" alt="">
@@ -81,8 +108,11 @@
 
 
     </footer>
+ <script src="assets/script.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </body>
-<script src="assets/script.js"></script>
+
+
 
 
 </html>
@@ -128,11 +158,4 @@ function cityWhereweare_func{
 https://github.com/CHAOUCHI/cdpi-dwwm/tree/1-phase2-use-case-projects-mvc/Phase%202%20-%20MVC%20REST%20et%20SPA/1.%20JavaScript%20-%20SPA%20(js%20frontend)/Cours/Annexe%20-%20GeoLocationAPI
 
 
-
-[BONUS] - Changer la couleur de fond en fonction de l'heure (jour ou nuit).
-
-function nightDaymode_func{
-
-    couleur de fond jour nuit un toggle ? oui
-
-} -->
+-->
