@@ -72,12 +72,19 @@ document.querySelector(".search").addEventListener("input", searchBar_func);
 // } 
 
 
-function cityWhereweare_func{
+function cityWhereweare_func(){
 
-    mettre sa ville ici quand on appuie sur la loop en bas à droite de l'écran
+    // mettre sa ville ici quand on appuie sur la loop en bas à droite de l'écran
+    const bntChezmoi = document.querySelector("chezmoiloop");
+
+    bntChezmoi.addEventListener(click, "coucou");
 }
 
+function coucou(){
+  alert("coucopcuszudgycyedhf");
+}
 
+coucou();
 function nightDaymode_func() {
 
   const currentTime = new Date().getHours();
