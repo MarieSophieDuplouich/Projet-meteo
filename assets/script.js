@@ -1,6 +1,6 @@
 
 //mettre le fetch
-function essai_func() {
+function princiPal_func() {
   fetch("https://geocoding-api.open-meteo.com/v1/search?name=toulouse&count=100&language=fr&format=json&countryCode=FR")
     .then(response_obj => response_obj.json())
     .then(positions_arr => {
@@ -9,9 +9,6 @@ function essai_func() {
       const template_position = document.querySelector(".template-position");
       //le "results" c'est ce qu'il ya dans l'api L’API Open-Meteo Geocoding ne renvoie pas directement un tableau, mais un objet JSON avec une clé results qui contient le tableau.
       Array.prototype.forEach.call(positions_arr.results, position_obj => {
-        // console.log(position_obj.name);
-        // console.log(position_obj.latitude);
-        // console.log(position_obj.longitude);
 
         const position_elem = template_position.content.cloneNode(true);
         position_elem.querySelector(".user-name").textContent = position_obj.name;
@@ -24,7 +21,7 @@ function essai_func() {
 
 }
 
-essai_func();
+princiPal_func();
 
 
 // position gps latitude longitude 
@@ -64,27 +61,71 @@ document.querySelector(".search").addEventListener("input", searchBar_func);
 //pas de ville sur un point de coordonnées sur la terre
 
 
-// function princiPal_func{
 
-//     afficher image 
-//     afficher la ville$
-//     afficher les degrés habituellement addvent listenr
-// } 
+function cityWhereweare_func() {
+  const status = document.querySelector("#status");
+  const mapLink = document.querySelector("#map-link");
+
+  mapLink.href = "";
+  mapLink.textContent = "";
+
+  async function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    status.textContent = "Récupération du nom de la ville…";
+
+    try {
+      // Requête principale vers Nominatim pour obtenir les infos d’adresse
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=jsonv2&accept-language=fr`
+      );
+      const data = await res.json();
+      console.log("Réponse de Nominatim :", data);
+
+      // Extraction du nom de la ville
+      let name =
+        data?.address?.city ||
+        data?.address?.town ||
+        data?.address?.village ||
+        "";
+
+      // Si rien trouvé, on tente une recherche alternative
+      if (!name) {
+        const searchRes = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${latitude},${longitude}&format=jsonv2&accept-language=fr`
+        );
+        const searchData = await searchRes.json();
+        name = searchData?.[0]?.display_name?.split(",")[0] || "Ville inconnue";
+      }
+
+      // Mise à jour de l'affichage
+      status.textContent = "";
+      mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+      mapLink.textContent = `Latitude: ${latitude.toFixed(5)}°, Longitude: ${longitude.toFixed(5)}°, Ville: ${name}`;
+    } catch (error) {
+      console.error("Erreur lors de la récupération :", error);
+      status.textContent = "Erreur lors de la récupération des données.";
+    }
+  }
+
+  function error() {
+    status.textContent = "Impossible de trouver votre position.";
+  }
+
+  if (!navigator.geolocation) {
+    status.textContent = "Géolocalisation non supportée par votre navigateur.";
+  } else {
+    status.textContent = "Chargement…";
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
+}
+
+cityWhereweare_func();
 
 
-// function cityWhereweare_func(){
+document.querySelector("#find-me").addEventListener("click", cityWhereweare_func);
 
-//     // mettre sa ville ici quand on appuie sur la loop en bas à droite de l'écran
-//     const bntChezmoi = document.querySelector("chezmoiloop");
-
-//     bntChezmoi.addEventListener(click, "coucou");
-// }
-
-// function coucou(){
-//   alert("coucopcuszudgycyedhf");
-// }
-
-coucou();
 function nightDaymode_func() {
 
   const currentTime = new Date().getHours();
@@ -94,21 +135,16 @@ function nightDaymode_func() {
   if (0 <= currentTime && currentTime < 5) {
     backgroundTochange.classList.add("night");
   }
-  if (5 <= currentTime && currentTime < 11) {
+  if (5 <= currentTime && currentTime < 16) {
 
     backgroundTochange.classList.add("day");
   }
-  if (11 <= currentTime && currentTime < 16) {
-    backgroundTochange.classList.add("day");
-  }
-  if (16 <= currentTime && currentTime < 22) {
-    backgroundTochange.classList.add("night");
-  }
-  if (22 <= currentTime && currentTime <= 24) {
+  
+  if (16 <= currentTime && currentTime <= 24) {
     backgroundTochange.classList.add("night");
   }
 
-  console.log(currentTime);
+  // console.log(currentTime);
   //  Variable string avant dans if modifier seulement la avraibale strng apres les if c'st la que j'utilise la string pour un code simplifié
 }
 

@@ -18,6 +18,10 @@ body {
     list-style-type: none;
 }
 
+#map{
+    height:500px;
+    width:500px;
+}
 .day{
     background-color: gold;
 }
