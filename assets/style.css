@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    outline: 1px red solid;
+    /* outline: 1px red solid; */
 }
 
 body {
@@ -33,9 +33,9 @@ body {
     width: 500px;
 }
 
-#map-link{
-      text-decoration:  none;
-      color: #ffffff;
+#map-link {
+    text-decoration: none;
+    color: #ffffff;
 }
 
 .day {
@@ -63,6 +63,7 @@ svg:not(.loop) {
 
 .container {
     width: 852px;
+    max-width: 95%;
     margin: 0 auto;
     padding: 16px;
 }
@@ -86,6 +87,8 @@ input {
     margin: 0 4px 0 0;
     border-radius: 5px;
     height: 30px;
+    background: none;
+    color:#ffffff;
 }
 
 .button {
@@ -93,7 +96,8 @@ input {
     min-height: 48px;
     min-width: 10px;
     word-wrap: nowrap;
-    border-radius: 5px;
+    background: none;
+    border: none;
 }
 
 input {
@@ -121,25 +125,42 @@ input {
 
 /* Responsivité */
 
-@media (width <=846px) {
+@media (width <=600px) {
 
-.search-container {
-display:grid;
-grid-template-columns: 1fr 1fr;
- align-content: none;
-    align-items: center;
-gap: 10px;
+    .container{
+        width: 95%;
+    }
 
+    .search-container,.container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        align-content: none;
+        align-items: center;
+        gap: 10px;
+
+    }
+input, button {
+  width:10rem;
 }
+
+
 }
 
 
 @media (width <=400px) {
 
-.search-container {
-display:grid;
-grid-template-columns: 1fr;
+    .search-container {
+        display: grid;
+        grid-template-columns: 1fr;
 
 
-}
+    }
+
+    .container, .city, h1{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
 }
