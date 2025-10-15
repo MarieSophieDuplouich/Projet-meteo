@@ -38,12 +38,10 @@ body {
     color: #ffffff;
 }
 
-.day {
-    background-color: gold;
-}
+
 
 .night {
-    background-color: black;
+    background: linear-gradient(0.35turn, #0062ff, #07505c, #1f615a);
 }
 
 .patrick-hand-regular {
