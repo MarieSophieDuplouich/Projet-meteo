@@ -101,11 +101,6 @@ function afficherMeteo_func(lat,long) {
 }
 
 
-
-
-
-
-
 function convertWeatherCodeToSvgIndex(code) {
   if (code === 0) return 0;
   if ([1, 2, 3].includes(code)) return 1;
@@ -220,7 +215,7 @@ afficherMeteo_func();
  nightDaymode_func();
 
 
-document.querySelector("#find-me").addEventListener("click", oncityWhereweare_func);
+document.querySelector("#find-me,#find-mee").addEventListener("click", oncityWhereweare_func);
 
 // chercher ville par l'utilisateur
 chercherVille_func();
