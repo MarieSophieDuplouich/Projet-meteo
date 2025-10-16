@@ -64,7 +64,7 @@ async function chercherVille_func() {
       `https://geocoding-api.open-meteo.com/v1/search?name=${ville}&count=1&language=fr&format=json`
     );
     const data = await response.json();
-
+    console.log(data)
     if (!data.results || data.results.length === 0) {
       return "Ville non trouvée";
     }
@@ -77,6 +77,11 @@ async function chercherVille_func() {
     const container = document.querySelector(".position-user");
     const template_ville = document.querySelector(".template-position");
     container.innerHTML = ""; // Reset container
+
+    const mapLink = document.querySelector("#map-link");
+    mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+    mapLink.textContent = `Altitude ${latitude.toFixed(2)}°, Longitude ${longitude.toFixed(2)}°, Ville ${name}`;
+
 
     const ville_elem = template_ville.content.cloneNode(true);
     ville_elem.querySelector(".user-name").textContent = name;
@@ -92,7 +97,7 @@ async function chercherVille_func() {
     afficherMeteo_func(latitude, longitude);
     nightDaymode_func(latitude, longitude);
   } catch (error) {
-    console.error("Erreur lors de la recherche :", error);
+    console.error("Erreur lors de la recherche :", error);  
     return "Erreur lors de la recherche de la ville.";
   }
 }
@@ -131,14 +136,16 @@ function afficherMeteo_func(lat, long) {
     .then(response_obj => response_obj.json())
     .then(forecast_obj => {
       // let svgIndex = 0;
-      const code = forecast_obj.weather_code
+
+      const container = document.querySelector(".weather-container");
+      container.innerHTML = ""; //text.content ?
+
+      const code = forecast_obj.current.weather_code
       let svgIndex = convertWeatherCodeToSvgIndex(code);
       // le weather_code et il faut le savoir est le code du temps actuel
-      const container = document.querySelector(".notretempsaujourdhui");
-      // container.innerHTML = "";
+   
       
       const template_meteo = document.querySelector(".template-meteo");
-      console.log(template_meteo)
       const meteo_obj = forecast_obj.current;
       const meteo_elem = template_meteo.content.cloneNode(true);
       const img = meteo_elem.querySelectorAll(".svg");
@@ -156,7 +163,7 @@ function afficherMeteo_func(lat, long) {
       meteo_elem.querySelector(".degrecelsius").textContent = meteo_obj.apparent_temperature + "°C";
 
       container.appendChild(meteo_elem);
-
+      
     });
 
 
@@ -199,7 +206,7 @@ function oncityWhereweare_func() {
 
     const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=jsonv2&accept-language=fr`);
     const data = await res.json();
-
+    console.log(data);
     const city = data.address.city || data.address.town || data.address.village || "Ville inconnue";
 
     mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
