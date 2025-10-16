@@ -38,7 +38,9 @@ body {
     color: #ffffff;
 }
 
-
+.day {
+    background: gold;
+}
 
 .night {
     background: linear-gradient(0.35turn, #0062ff, #07505c, #1f615a);
